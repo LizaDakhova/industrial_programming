@@ -1,0 +1,20 @@
+version: '3'
+services:
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+    - 5672:5672
+    - 15672:15672
+
+  producer:
+    build: ./producer
+    links:
+    - rabbitmq
+    command: python -u producer.py
+
+  consumer:   
+    build: ./consumer
+    links:
+    - rabbitmq
+command: python -u consumer.py
